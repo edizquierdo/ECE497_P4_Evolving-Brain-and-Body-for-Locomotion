@@ -17,7 +17,12 @@ Third, make sure everything runs:
 
 This should launch your Physics simulation. 
 - You can look around your world by rotating the virtual camera.
-- For Windows users: just click and drag with the mouse. You can also hold the left control button down and move with the mouse, similar to the Mac users.
-- For Mac users: hold down CTRL, click and drag with a the mouse or press and drag on a trackpad.
+a. For Windows users: just click and drag with the mouse. You can also hold the left control button down and move with the mouse, similar to the Mac users.
+b. For Mac users: hold down CTRL, click and drag with a the mouse or press and drag on a trackpad.
 - A two-fingered swipe on a trackpad, or rolling a mouse's scroll wheel, will move the position of the virtual camera.
+- You can also manipulate the objects in the world. 
+- You can "grab" the cube object that you create with your mouse and "throw" them by moving your mouse.
+a. Windows users: Hold down SHIFT, click on the cube, and drag the mouse. You should see the cube, but not the virtual camera.
+b. Mac users: Click on the cube and drag the mouse. You should see the cube, but not the virtual camera.
+
   
