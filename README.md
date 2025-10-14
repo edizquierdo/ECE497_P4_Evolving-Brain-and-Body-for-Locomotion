@@ -15,4 +15,9 @@ Third, make sure everything runs:
 - Run generate.py
 - Run simulate.py
 
+This should launch your Physics simulation. 
+- You can look around your world by rotating the virtual camera.
+- For Windows users: just click and drag with the mouse. You can also hold the left control button down and move with the mouse, similar to the Mac users.
+- For Mac users: hold down CTRL, click and drag with a the mouse or press and drag on a trackpad.
+- A two-fingered swipe on a trackpad, or rolling a mouse's scroll wheel, will move the position of the virtual camera.
   
