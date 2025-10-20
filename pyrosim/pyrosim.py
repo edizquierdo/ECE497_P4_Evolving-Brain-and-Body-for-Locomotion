@@ -77,6 +77,7 @@ def Prepare_Link_Dictionary(bodyID):
         jointName = jointName.split("_")
 
         linkName = jointName[1]
+        print("Prepare Links: ",linkName)
 
         linkNamesToIndices[linkName] = jointIndex
 
@@ -96,7 +97,8 @@ def Prepare_Joint_Dictionary(bodyID):
 
         jointInfo = p.getJointInfo( bodyID , jointIndex )
 
-        jointName = jointInfo[1]
+        jointName = jointInfo[1].decode("utf-8")
+        print("Prepare Joints ",jointName)
 
         jointNamesToIndices[jointName] = jointIndex
 
