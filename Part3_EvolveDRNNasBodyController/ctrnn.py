@@ -69,12 +69,14 @@ class CTRNN():
         return sigmoid(np.dot(self.MotorWeights.T, self.Output))
 
     def save(self, filename):
-        np.savez(filename, size=self.Size, weights=self.Weights, biases=self.Biases, timeconstants=self.TimeConstants)
+        np.savez(filename, size=self.Size, weights=self.Weights, sensorweights=self.SensorWeights, motorweights=self.MotorWeights, biases=self.Biases, timeconstants=self.TimeConstants)
 
     def load(self, filename):
         params = np.load(filename)
         self.Size = params['size']
         self.Weights = params['weights']
+        self.SensorWeights = params['sensorweights'] 
+        self.MotorWeights = params['motorweights'] 
         self.Biases = params['biases']
         self.TimeConstants = params['timeconstants']
         self.invTimeConstants = 1.0/self.TimeConstants

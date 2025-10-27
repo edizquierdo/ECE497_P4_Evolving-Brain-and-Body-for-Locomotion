@@ -9,7 +9,7 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 
-#physicsClient = p.connect(p.GUI)
+# physicsClient = p.connect(p.GUI) 
 physicsClient = p.connect(p.DIRECT) # NEW
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.configureDebugVisualizer(p.COV_ENABLE_GUI,0)
@@ -20,7 +20,7 @@ robotId = p.loadURDF("robot.urdf")
 
 pyrosim.Prepare_To_Simulate(robotId)
 
-transient = 1000
+# transient = 1000
 duration = 4000                 
 
 nnsize = 10
@@ -33,9 +33,7 @@ WeightRange = 10.0
 BiasRange = 10.0
 
 def fitnessFunction(genotype):
-    # Reset the body
-    # Reset the position back to 0s
-    # Reset the angles back to some standard
+    # Reset joints / Reset the coordinates the body 
 
     nn = ctrnn.CTRNN(nnsize,0,motor_outputs)
     nn.setParameters(genotype,WeightRange,BiasRange,TimeConstMin,TimeConstMax)
