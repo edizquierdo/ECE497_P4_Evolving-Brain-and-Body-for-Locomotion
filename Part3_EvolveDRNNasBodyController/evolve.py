@@ -20,8 +20,8 @@ robotId = p.loadURDF("robot.urdf")
 
 pyrosim.Prepare_To_Simulate(robotId)
 
-# transient = 1000
-duration = 4000                 
+transient = 1000
+duration = 5000                 
 
 nnsize = 10
 motor_outputs = 2
@@ -32,15 +32,35 @@ TimeConstMax = 2.0
 WeightRange = 10.0
 BiasRange = 10.0
 
+def reset_robot(robotId, base_pos=[0,0,1], base_orn=[0,0,0,1]):
+    # Reset base position and orientation
+    p.resetBasePositionAndOrientation(robotId, base_pos, base_orn)
+
+    # zero out velocity
+    p.resetBaseVelocity(robotId, [0,0,0], [0,0,0])
+
+    # Reset all joint angles and velocities
+    num_joints = p.getNumJoints(robotId)
+    for j in range(num_joints):
+        p.resetJointState(robotId, j, targetValue=0.0, targetVelocity=0.0)
+
 def fitnessFunction(genotype):
     # Reset joints / Reset the coordinates the body 
+    reset_robot(robotId)
 
     nn = ctrnn.CTRNN(nnsize,0,motor_outputs)
     nn.setParameters(genotype,WeightRange,BiasRange,TimeConstMin,TimeConstMax)
     nn.initializeState(np.zeros(nnsize))
 
+    # Simulate both NN and Body for a little while 
+    # without connecting them, so that transients pass 
+    # for both of them
+    for i in range(transient):
+        nn.step(dt,[])
+        p.stepSimulation()
+
     # Test period
-    # Get starting position
+    # Get starting position (after the transient)
     linkState = p.getLinkState(robotId,0)
     posx_start = linkState[0][0]
     posy_start = linkState[0][1]
@@ -81,7 +101,7 @@ genesize = nnsize*nnsize + 2*nnsize + 2*nnsize # last one is for the output weig
 recombProb = 0.5
 mutatProb = 0.01
 demeSize = 2
-generations = 10
+generations = 100
 
 # Evolve and visualize fitness over generations
 ga = eas.Microbial(fitnessFunction, popsize, genesize, recombProb, mutatProb, demeSize, generations)

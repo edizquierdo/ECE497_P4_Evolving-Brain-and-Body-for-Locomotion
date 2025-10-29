@@ -31,12 +31,24 @@ TimeConstMax = 2.0
 WeightRange = 10.0
 BiasRange = 10.0
 
+def reset_robot(robotId, base_pos=[0,0,1], base_orn=[0,0,0,1]):
+    # Reset base position and orientation
+    p.resetBasePositionAndOrientation(robotId, base_pos, base_orn)
+
+    # zero out velocity
+    p.resetBaseVelocity(robotId, [0,0,0], [0,0,0])
+
+    # Reset all joint angles and velocities
+    num_joints = p.getNumJoints(robotId)
+    for j in range(num_joints):
+        p.resetJointState(robotId, j, targetValue=0.0, targetVelocity=0.0)
+
 def fitnessFunction(genotype):
+    reset_robot(robotId)
 
     nn = ctrnn.CTRNN(nnsize,0,motor_outputs)
     nn.setParameters(genotype,WeightRange,BiasRange,TimeConstMin,TimeConstMax)
     nn.initializeState(np.zeros(nnsize))
-
 
     output = np.zeros((duration,nnsize))
     motorout = np.zeros((duration,2))
